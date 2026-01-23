@@ -50,7 +50,7 @@ int winCheckNormal(){
 void modifyBoard(std::string Move){
  addy = 0;
 //int x = std::stoi(Move.substr(Move.find("(") + 1,1))));
-//int y = std::stoi(,Move.substr(Move.find(",") + 1,1)));
+//int y = std::stoi(Move.substr(Move.find(",") + 1,1)));
 std::array<std::string,3> possibleInt= {"0","1","2"};
  int x = 0;
  int y = 0;
@@ -58,13 +58,16 @@ std::array<std::string,3> possibleInt= {"0","1","2"};
 
  
 for(int Check = 0; Check == 0;){
-
   if((Move.find("(") == std::string::npos) || (Move.find(",") == std::string::npos) || (Move.find(")") == std::string::npos) || (Move.find(")") < Move.find(",")) || (Move.find(",") < Move.find("("))){
      std::cout<<"ERROR:Incorect format \"(x,y)\" try again:\n";
      std::getline(std::cin, Move);
      continue;
   }
-
+  if(Move.size() > 5){
+   std::cout<<"ERROR: Input too long\n";
+   std::getline(std::cin, Move);
+   continue;
+  }
   if(((std::find(std::begin(possibleInt),std::end(possibleInt) + 1,(Move.substr(Move.find("(") + 1,1)))) == (std::end(possibleInt) + 1)) || ((std::find(std::begin(possibleInt),std::end(possibleInt) + 1,Move.substr(Move.find(",") + 1,1))) == std::end(possibleInt) + 1)){
     std::cout<<"ERROR:Invalid carecter try again:\n";
      std::getline(std::cin, Move);
@@ -79,9 +82,8 @@ for(int Check = 0; Check == 0;){
   Check++;
  }
  pastMoves.push_back(Move);
-x = std::stoi(Move.substr(1,Move.find(",") - 1));
-y = std::stoi(Move.substr(Move.find(",") + 1,Move.find(")") - 1));
-
+ x = std::stoi(Move.substr(Move.find("(") + 1,1));
+ y = std::stoi(Move.substr(Move.find(",") + 1,1));
  if(x == 0 && y == 0){addy = 0;}
  if(x == 1 && y == 0){addy = 1;}
  if(x == 2 && y == 0){addy = 2;}
